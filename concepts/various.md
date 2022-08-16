@@ -21,3 +21,52 @@ You can give a duration (in seconds) to the lease when renewing.
 Revoke by prefix:
 ```sh
 vault lease revoke -prefix <Prefix>
+```
+
+## [Response Wrapping](https://developer.hashicorp.com/vault/docs/concepts/response-wrapping)
+Value is not the actual secret but a reference. If someone cannot unwrap token you could detect 
+malfeasance. Limit the lifetime of secret exposure. Response will contain:
+- TTL
+- Token
+- Creation: time the response-wrapping token was created
+- Creatop Path
+- Wrapped Accessor
+
+Paths:
+- `sys/wrapping/lookup`
+- `sys/wrapping/unwrap`
+- `sys/wrapping/rewrap`: migrate to a new response-wrapping token
+- `sys/wrapping/wrap`
+
+## [Username Templating](https://developer.hashicorp.com/vault/docs/concepts/username-templating)
+Generated dynamic users for external systems.
+- Functions: `lowercase`, `replace`, `trucate`, `truncate_sha256`, `uppercase`
+- Generating Functions: `random`, `timestamp`, `unix_time`, `unix_time_millis`, `uuid`
+- Hashing: `base64`, `sha256`
+
+## Raft
+Join by cmd:
+```sh
+vault operator raft join <LeaderAddress>
+```
+
+## Recovery mode
+Use of a recovery token. 
+
+Process:
+- Seal/stop nodes
+- If Integrated Storage, check the highest-index ones
+- Restart target node in this mode
+- Generate a recovery token
+- Use it to perfom sys/raw requests to repair
+- If Integrated St, reform it (data won't be the same)
+    - Delete data on the other nodes and re-join them
+
+## Transform Secrets Engine
+Mechanims for tranforming sensitive info to protect it.
+- **Format Preserving Encryption (FPE)**: encrypting & decrypting values while retaining their 
+formats
+- **Masking**: replacing sensitive info with masking characters
+- **Tokenization**: replaces sensitive info with mathematically unrelated tokens
+
+![Encryptions](encryptions.avif)
