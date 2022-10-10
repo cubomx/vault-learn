@@ -70,3 +70,13 @@ formats
 - **Tokenization**: replaces sensitive info with mathematically unrelated tokens
 
 ![Encryptions](encryptions.avif)
+
+## [Mount migration](https://developer.hashicorp.com/vault/docs/concepts/mount-migration)
+This is an async process `sys/remount`. To check the status `sys/remount/status`. To move across 
+namespaces, the namespaces (src, dest) should be: from where the process is invoked or a children
+of it. Leases, dynamic secrets (secrets mount) and tokens (auth mount) will be revoked. 
+Configurations stay.
+
+### Cleanup
+Target entities & aliases to the new mount (if anyone pointed to the old one). Check if you need to
+do some refactoring to the policies (if any targeting the old one).

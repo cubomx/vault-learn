@@ -1,4 +1,26 @@
 # [Policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
+Govern behavior of clients & RBAC by specifying access privileges (**authorization**). 
+
+*Root policy*
+is created during init; it is assigned to the [*root token*](https://developer.hashicorp.com/vault/tutorials/policies/policies). It is the initial superuser. 
+
+The *default policy* enables a token to reflect & manage itself. Also, assigned to the root token.
+
+A **policy** defines a list of paths. It expresses the capabilities that are allowed. Vault follows
+*deny all by default*. Written in HCL.
+
+Submit policy:
+```
+vault policy write <Name> <NameFile>.hcl
+```
+
+Check capabilities:
+```
+vault token capabilities <Token> <Path>
+```
+
+With the `-output-policy` option you can see the necessary ACL policy.
+
 Syntax:
 ```hcl
 # This section grants all access on "secret/*". Further restrictions can be
