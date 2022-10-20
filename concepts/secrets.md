@@ -102,3 +102,6 @@ Use the `cas` flag with the current version:
 ```sh
 vault kv put -cas=<CurrentN> <Path <Values>...
 ```
+
+## Cubbyhole
+A store for a person's token. Another user cannot access this kind of store from another person.
